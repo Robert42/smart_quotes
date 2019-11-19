@@ -1,6 +1,7 @@
 //! # smart_quotes
 //!
-//! This is a tiny helper crate for implementing smart quotes.
+//! This is a tiny helper crate providing a simple heursitic for
+//! implementing smart quotes.
 //!
 //!
 //! While this crate does not convert any glyphs, it gives a heuristic
@@ -34,12 +35,13 @@
 //! assert_eq!(decide_quote_after(Some('“')), Decision::Close);
 //! assert_eq!(decide_quote_after(Some('‘')), Decision::Close);
 //! assert_eq!(decide_quote_after(Some('.')), Decision::Close);
+//! assert_eq!(decide_quote_after(Some(':')), Decision::Close);
 //! ```
 //!
 
 /// Enum for holding the decision, whether an open or closed quotation mark
 /// should be used.
-#[derive(Debug, PartialEq, Copy, Clone)]
+#[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub enum Decision {
     Open,
     Close,
