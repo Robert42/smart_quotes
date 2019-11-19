@@ -27,6 +27,9 @@
 //! assert_eq!(decide_quote_after(Some('{')), Decision::Open);
 //! assert_eq!(decide_quote_after(Some('⟨')), Decision::Open);
 //!
+//! assert_eq!(decide_quote_after(Some('\u{2012}')), Decision::Open);
+//! assert_eq!(decide_quote_after(Some('\u{2015}')), Decision::Open);
+//!
 //! assert_eq!(decide_quote_after(Some('x')), Decision::Close);
 //! assert_eq!(decide_quote_after(Some('“')), Decision::Close);
 //! assert_eq!(decide_quote_after(Some('‘')), Decision::Close);
@@ -45,7 +48,7 @@ pub enum Decision {
 pub fn decide_quote_after(previous_character: Option<char>) -> Decision {
     match previous_character {
         None => Decision::Open,
-        Some(x) if is_space(x) || is_opening_parenthesis(x) => Decision::Open,
+        Some(x) if is_space(x) || is_dash(x) || is_opening_parenthesis(x) => Decision::Open,
         _ => Decision::Close,
     }
 }
@@ -66,6 +69,13 @@ fn is_space(x: char) -> bool {
         | '\u{205F}'
         | '\u{3000}' => true,
         '\u{200B}' => true, // zero width space added here, because it indicates the separation between words
+        _ => false,
+    }
+}
+
+fn is_dash(x: char) -> bool {
+    match x {
+        '\u{2012}'..='\u{2015}' => true,
         _ => false,
     }
 }
