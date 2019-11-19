@@ -1,5 +1,6 @@
 [package]
 name = "smart_quotes"
+description = "Heuristic for implementing smart quotes"
 version = "0.1.0"
 authors = ["Robert Hildebrandt <robert.3dgamedev@gmail.com>"]
 edition = "2018"
