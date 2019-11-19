@@ -1,16 +1,16 @@
 //! # smart_quotes
 //!
-//! This is a tiny helper crate useful for converting vertical quotation
-//! marks (`"` and `'`) into the distinctly left- and right handed
-//! quotation marks.
+//! This is a tiny helper crate for implementing smart quotes.
 //!
-//! This crate does not convert any grlyphs.
-//! It just provides a heuristic based on the previous character whether
-//! a opening or closing quotation mark should be used.
+//!
+//! While this crate does not convert any glyphs, it gives a heuristic
+//! based on the previous character, wheter the next character would be
+//! an opening or closing quotation mark.
 //!
 //! Example usage:
 //! ```
 //! use smart_quotes::{decide_quote_after, Decision};
+//!
 //! assert_eq!(decide_quote_after(None), Decision::Open);
 //!
 //! assert_eq!(decide_quote_after(Some(' ')), Decision::Open);
@@ -33,6 +33,8 @@
 //! ```
 //!
 
+/// Enum for holding the decision, whether an open or closed quotation mark
+/// should be used.
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub enum Decision {
     Open,
