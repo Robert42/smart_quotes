@@ -1,3 +1,39 @@
+//! # smart_quotes
+//!
+//! This is a tiny helper crate useful for converting vertical quotation
+//! marks (`"` and `'`) into the distinctly left- and right handed
+//! quotation marks.
+//!
+//! This crate does not convert any grlyphs.
+//! It just provides a heuristic based on the previous character whether
+//! a opening or closing quotation mark should be used.
+//!
+//! Example usage:
+//! ```
+//! use smart_quotes::{decide_quote_after, Decision};
+//! assert_eq!(decide_quote_after(None), Decision::Open);
+//!
+//! assert_eq!(decide_quote_after(Some(' ')), Decision::Open);
+//! assert_eq!(decide_quote_after(Some('\t')), Decision::Open);
+//! assert_eq!(decide_quote_after(Some('\n')), Decision::Open);
+//! assert_eq!(decide_quote_after(Some('\x0A')), Decision::Open);
+//! assert_eq!(decide_quote_after(Some('\u{1680}')), Decision::Open);
+//! assert_eq!(decide_quote_after(Some('\u{2005}')), Decision::Open);
+//! assert_eq!(decide_quote_after(Some('\u{202F}')), Decision::Open);
+//! assert_eq!(decide_quote_after(Some('\u{2029}')), Decision::Open);
+//!
+//! assert_eq!(decide_quote_after(Some('(')), Decision::Open);
+//! assert_eq!(decide_quote_after(Some('[')), Decision::Open);
+//! assert_eq!(decide_quote_after(Some('{')), Decision::Open);
+//!
+//! assert_eq!(decide_quote_after(Some('x')), Decision::Close);
+//! assert_eq!(decide_quote_after(Some('“')), Decision::Close);
+//! assert_eq!(decide_quote_after(Some('‘')), Decision::Close);
+//! assert_eq!(decide_quote_after(Some('.')), Decision::Close);
+//! ```
+//!
+
+#[derive(Debug, PartialEq, Copy, Clone)]
 pub enum Decision {
     Open,
     Close,
@@ -35,13 +71,5 @@ fn is_opening_parenthesis(x: char) -> bool {
     match x {
         '(' | '[' | '{' => true,
         _ => false,
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
     }
 }
