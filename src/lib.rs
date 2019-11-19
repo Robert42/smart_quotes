@@ -37,14 +37,16 @@
 //! ```
 //!
 
-/// Enum for holding the decision, whether an open or closed quotation mark
-/// should be used.
+/// The decision, whether an open or closed quotation mark should be used.
 #[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub enum Decision {
     Open,
     Close,
 }
 
+/// Applies the heurisic based on the previous_character.
+///
+/// If the quote would be the first character, you can pass `None`.
 pub fn decide_quote_after(previous_character: Option<char>) -> Decision {
     match previous_character {
         None => Decision::Open,
