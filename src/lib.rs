@@ -1,3 +1,5 @@
+//! # Smart Quotes
+//!
 //! This is a tiny helper crate providing a simple heursitic for
 //! implementing smart quotes.
 //!
