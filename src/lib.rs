@@ -25,6 +25,7 @@
 //! assert_eq!(decide_quote_after(Some('(')), Decision::Open);
 //! assert_eq!(decide_quote_after(Some('[')), Decision::Open);
 //! assert_eq!(decide_quote_after(Some('{')), Decision::Open);
+//! assert_eq!(decide_quote_after(Some('⟨')), Decision::Open);
 //!
 //! assert_eq!(decide_quote_after(Some('x')), Decision::Close);
 //! assert_eq!(decide_quote_after(Some('“')), Decision::Close);
@@ -71,7 +72,7 @@ fn is_space(x: char) -> bool {
 
 fn is_opening_parenthesis(x: char) -> bool {
     match x {
-        '(' | '[' | '{' => true,
+        '(' | '[' | '{' | '⟨' => true,
         _ => false,
     }
 }
